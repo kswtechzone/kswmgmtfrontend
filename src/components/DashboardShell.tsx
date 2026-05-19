@@ -9,6 +9,8 @@ import {
   Building2, Lock, AlertTriangle, RefreshCw, Loader2, Scissors
 } from 'lucide-react';
 
+import NotificationBell from './dashboard/NotificationBell';
+
 export interface MenuItem {
   name: string;
   href: string;
@@ -251,9 +253,7 @@ export default function DashboardShell({ children, mode }: DashboardShellProps) 
                 <RefreshCw size={18} />
               </button>
             )}
-            <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer' }}>
-              <Bell size={20} />
-            </button>
+            <NotificationBell />
             <div style={{ height: '32px', width: '1px', background: 'var(--border)' }}></div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-3)' }}>
               <div style={{ 

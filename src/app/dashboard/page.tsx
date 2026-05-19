@@ -2,53 +2,30 @@
 
 import React, { useEffect, useState } from 'react';
 import { 
-  CreditCard, Users, Hotel, Loader2, Lock, AlertTriangle, WifiOff,
-  Utensils, Scissors, Globe, Package, DollarSign
+  CreditCard, Users, Hotel, Loader2, AlertTriangle, WifiOff,
+  Utensils, Scissors, Globe, Package, DollarSign, User, ShieldAlert, Award, Star, Gem, Compass, Lock
 } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
-// Next.js Dynamic Imports (SSR Disabled) for distinct split chunks
-const HotelWidget = dynamic(() => import('@/components/dashboard/HotelWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Hotel Operations...</div>
-});
+// Next.js Dynamic Imports (SSR Disabled)
+const HotelWidget = dynamic(() => import('@/components/dashboard/HotelWidget'), { ssr: false });
+const PosWidget = dynamic(() => import('@/components/dashboard/PosWidget'), { ssr: false });
+const ParlorWidget = dynamic(() => import('@/components/dashboard/ParlorWidget'), { ssr: false });
+const WebsiteWidget = dynamic(() => import('@/components/dashboard/WebsiteWidget'), { ssr: false });
+const InventoryWidget = dynamic(() => import('@/components/dashboard/InventoryWidget'), { ssr: false });
+const HrWidget = dynamic(() => import('@/components/dashboard/HrWidget'), { ssr: false });
+const FinanceWidget = dynamic(() => import('@/components/dashboard/FinanceWidget'), { ssr: false });
+const LiveWebsitePreviewShowcase = dynamic(() => import('@/components/dashboard/LiveWebsitePreviewShowcase'), { ssr: false });
+const UserProfileWidget = dynamic(() => import('@/components/dashboard/UserProfileWidget'), { ssr: false });
 
-const PosWidget = dynamic(() => import('@/components/dashboard/PosWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading POS operations...</div>
-});
-
-const ParlorWidget = dynamic(() => import('@/components/dashboard/ParlorWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Parlor operations...</div>
-});
-
-const WebsiteWidget = dynamic(() => import('@/components/dashboard/WebsiteWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Builder...</div>
-});
-
-const InventoryWidget = dynamic(() => import('@/components/dashboard/InventoryWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Stock levels...</div>
-});
-
-const HrWidget = dynamic(() => import('@/components/dashboard/HrWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Staff logs...</div>
-});
-
-const FinanceWidget = dynamic(() => import('@/components/dashboard/FinanceWidget'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Finance...</div>
-});
-
-const LiveWebsitePreviewShowcase = dynamic(() => import('@/components/dashboard/LiveWebsitePreviewShowcase'), {
-  ssr: false,
-  loading: () => <div className="card glass" style={{ padding: 'var(--space-5)', color: 'var(--text-muted)' }}>Loading Brand Web Preview...</div>
-});
-
+interface LoyaltyItem {
+  organizationName: string;
+  organizationSlug: string;
+  loyaltyPoints: number;
+  notes?: string;
+  tags?: string[];
+}
 
 export default function DashboardPage() {
   const [user, setUser] = useState<any>(null);
@@ -63,7 +40,16 @@ export default function DashboardPage() {
     if (savedUser) {
       const parsed = JSON.parse(savedUser);
       setUser(parsed);
-      fetchLiveOrg(parsed.organization?.id);
+      
+      const isIndividual = parsed.organization?.slug === 'kswuser' || 
+                           parsed.organization?.slug?.startsWith('kswuser-') ||
+                           parsed.role === 'USER';
+
+      if (isIndividual) {
+        setLoading(false);
+      } else {
+        fetchLiveOrg(parsed.organization?.id);
+      }
     } else {
       window.location.href = '/login';
     }
@@ -107,12 +93,22 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '400px', color: 'var(--text-muted)' }}>
-        <Loader2 size={24} style={{ marginRight: '8px' }} />
+        <Loader2 size={24} style={{ marginRight: '8px' }} className="animate-spin" />
         Loading your workspace...
       </div>
     );
   }
 
+  const isIndividual = user.organization?.slug === 'kswuser' || 
+                       user.organization?.slug?.startsWith('kswuser-') ||
+                       user.role === 'USER';
+
+  // --- RENDERING INDIVIDUAL USER BASIC PROFILE LAYOUT ---
+  if (isIndividual) {
+    return <UserProfileWidget user={user} />;
+  }
+
+  // --- RENDERING REGULAR BUSINESS ORGANIZATION DASHBOARD ---
   const userCount = orgData?._count?.users ?? 0;
   const hotelCount = orgData?._count?.hotels ?? 0;
   const restaurantCount = orgData?._count?.restaurants ?? 0;
@@ -277,7 +273,7 @@ export default function DashboardPage() {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: 'var(--space-6)', marginTop: 'var(--space-8)' }}>
-        {/* Module Grid - Dynamically Splitting bundles */}
+        {/* Module Grid */}
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-5)' }}>
             <h3 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Modules</h3>
