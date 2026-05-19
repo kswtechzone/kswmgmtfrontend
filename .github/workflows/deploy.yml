@@ -34,14 +34,14 @@ jobs:
       - name: Sync Files to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.CPANEL_FTP_SERVER }}
-          username: ${{ secrets.CPANEL_FTP_USERNAME }}
-          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          server: 65.109.25.210
+          username: kswms@kswtechzone.com.np
+          password: ${{ secrets.FTP_PASSWORD}}
           port: 21 # Or 22 if utilizing SFTP
           # Local folder to deploy
           local-dir: ./
           # Remote server directory (e.g., /public_html or /nodejs_app)
-          server-dir: ${{ secrets.CPANEL_TARGET_DIR }}
+          server-dir: ./
           # Files to exclude from uploading (e.g., source files that aren't needed in production runtime)
           exclude: |
             **/.git*
@@ -51,18 +51,3 @@ jobs:
             tsconfig.json
             tailwind.config.js
             postcss.config.js
-
-      # If you are using Phusion Passenger on cPanel, we trigger a reload by touching tmp/restart.txt
-      - name: Restart Phusion Passenger App
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.CPANEL_SSH_HOST }}
-          username: ${{ secrets.CPANEL_SSH_USERNAME }}
-          password: ${{ secrets.CPANEL_SSH_PASSWORD }}
-          port: ${{ secrets.CPANEL_SSH_PORT || 22 }}
-          script: |
-            cd ${{ secrets.CPANEL_TARGET_DIR }}
-            npm install --production --omit=dev
-            mkdir -p tmp
-            touch tmp/restart.txt
-            echo "Passenger application successfully reloaded!"
