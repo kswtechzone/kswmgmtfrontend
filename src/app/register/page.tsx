@@ -86,7 +86,7 @@ export default function RegisterPage() {
             Get <span style={{ color: 'var(--primary)' }}>Started</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem', marginTop: 'var(--space-2)' }}>
-            Register your organization on KSWHospitality
+            Register your organization on KSWMS
           </p>
         </div>
 

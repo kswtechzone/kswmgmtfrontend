@@ -87,7 +87,7 @@ export default function ServicesSection({ content, config, previewMode, parlorSe
     setIsSubmitting(true);
     setErrorMsg('');
     
-    const slug = tenantSlug || 'modernhospitality'; // Fallback slug
+    const slug = tenantSlug || 'kswms'; // Fallback slug
     try {
       const res = await fetch(`http://localhost:4000/api/v1/public/${slug}/parlor/book`, {
         method: 'POST',

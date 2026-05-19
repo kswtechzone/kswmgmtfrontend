@@ -9,7 +9,9 @@ import {
   Mail,
   Filter,
   Building,
-  X
+  X,
+  Eye,
+  EyeOff
 } from 'lucide-react';
 
 export default function UserManagement() {
@@ -27,6 +29,7 @@ export default function UserManagement() {
     orgId: ''
   });
   const [creating, setCreating] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     fetchUsers();
@@ -238,14 +241,35 @@ export default function UserManagement() {
 
               <div>
                 <label className="label">Password</label>
-                <input 
-                  type="password" 
-                  required
-                  minLength={6}
-                  className="input" 
-                  value={formData.password}
-                  onChange={(e) => setFormData({...formData, password: e.target.value})}
-                />
+                <div style={{ position: 'relative' }}>
+                  <input 
+                    type={showPassword ? 'text' : 'password'} 
+                    required
+                    minLength={6}
+                    className="input" 
+                    value={formData.password}
+                    onChange={(e) => setFormData({...formData, password: e.target.value})}
+                    style={{ paddingRight: 'var(--space-10)' }}
+                  />
+                  <button 
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: 'var(--space-3)',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: 'var(--text-muted)',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--space-4)' }}>

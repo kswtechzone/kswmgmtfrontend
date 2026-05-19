@@ -21,7 +21,7 @@ export default function BrandManagement() {
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--space-8)' }}>
         <div>
-          <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--secondary)' }}>Hospitality Brands</h1>
+          <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--secondary)' }}>Corporate Brands</h1>
           <p style={{ color: 'var(--text-muted)' }}>Manage properties and digital assets.</p>
         </div>
         <button className="btn btn-primary" style={{ gap: 'var(--space-2)' }}>

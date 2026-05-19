@@ -80,7 +80,7 @@ export default function LoginPage() {
             <Hotel size={32} />
           </div>
           <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', letterSpacing: '-0.025em' }}>
-            KSW<span style={{ color: 'var(--primary)' }}>HOSPITALITY</span>
+            KSW<span style={{ color: 'var(--primary)' }}>MS</span>
           </h2>
           <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.875rem', marginTop: 'var(--space-2)' }}>
             Unified Access Portal
@@ -108,7 +108,7 @@ export default function LoginPage() {
             <input 
               className="input input-dark" 
               type="email" 
-              placeholder="name@kswhospitality.com" 
+              placeholder="name@kswtechzone.com.np" 
               value={email} 
               onChange={e => setEmail(e.target.value)} 
               required 

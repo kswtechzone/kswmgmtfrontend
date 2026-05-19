@@ -26,10 +26,10 @@ export default function Home() {
       </div>
       
       <h1 style={{ fontSize: '3.5rem', fontWeight: 800, marginBottom: 'var(--space-2)', letterSpacing: '-0.025em' }}>
-        KSW<span style={{ color: 'var(--primary)' }}>HOSPITALITY</span>
+        KSW<span style={{ color: 'var(--primary)' }}>MS</span>
       </h1>
       <p style={{ fontSize: '1.25rem', color: 'var(--text-muted)', maxWidth: '600px', marginBottom: 'var(--space-10)' }}>
-        The world's most advanced modular hospitality management system. 
+        The world's most advanced modular corporate and operational management system. 
         Designed for scale, built for excellence.
       </p>
 
@@ -53,7 +53,7 @@ export default function Home() {
       </div>
 
       <div style={{ marginTop: 'var(--space-10)', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
-        Join 2,500+ premium hospitality brands worldwide.
+        Join 2,500+ premium organizations worldwide.
       </div>
     </main>
   );

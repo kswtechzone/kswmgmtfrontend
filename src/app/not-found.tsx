@@ -88,7 +88,7 @@ export default function NotFound() {
         alignItems: 'center',
         gap: '12px'
       }}>
-        <span>© 2026 KSW Hospitality</span>
+        <span>© 2026 KSWMS</span>
         <span style={{ opacity: 0.3 }}>|</span>
         <Link href="/support" style={{ color: 'var(--primary)', textDecoration: 'none' }}>Contact Support</Link>
       </div>

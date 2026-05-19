@@ -44,7 +44,7 @@ export default function AdminOverview() {
     <div>
       <div style={{ marginBottom: 'var(--space-6)' }}>
         <h1 style={{ fontSize: '1.875rem', fontWeight: 700, color: 'var(--secondary)' }}>Dashboard Overview</h1>
-        <p style={{ color: 'var(--text-muted)' }}>Welcome to the KSWHospitality administrative control center.</p>
+        <p style={{ color: 'var(--text-muted)' }}>Welcome to the KSWMS administrative control center.</p>
       </div>
 
       <div className="stats-grid">

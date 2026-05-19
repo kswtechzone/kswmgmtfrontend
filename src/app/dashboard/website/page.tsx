@@ -430,7 +430,7 @@ export default function OrgWebsitePage() {
               )}
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem', margin: 0 }}>
-              {selectedWebsite ? `Managing subdomain: ${selectedWebsite.subdomain}.kswhospitality.com` : 'Create your public booking presence'}
+              {selectedWebsite ? `Managing domain: ${selectedWebsite.customDomain || `${selectedWebsite.subdomain}.kswtechzone.com.np`}` : 'Create your public booking presence'}
             </p>
           </div>
         </div>
@@ -451,7 +451,7 @@ export default function OrgWebsitePage() {
               </button>
               
               <a 
-                href={`https://${selectedWebsite.subdomain}.kswhospitality.com`} 
+                href={`https://${selectedWebsite.customDomain || `${selectedWebsite.subdomain}.kswtechzone.com.np`}`} 
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn btn-primary"
@@ -622,6 +622,18 @@ export default function OrgWebsitePage() {
                 />
               </div>
 
+              <div>
+                <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: '6px' }}>Custom Domain</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. platinumresort.com"
+                  className="input input-dark" 
+                  style={{ fontSize: '0.85rem', padding: '8px' }}
+                  value={selectedWebsite.customDomain || ''} 
+                  onChange={(e) => setSelectedWebsite({ ...selectedWebsite, customDomain: e.target.value })} 
+                />
+              </div>
+
               <button onClick={() => handleUpdateSettings()} className="btn btn-primary" style={{ gap: '6px', fontSize: '0.85rem', padding: '10px 14px' }}>
                 <Save size={16} /> Save Settings
               </button>
@@ -639,7 +651,7 @@ export default function OrgWebsitePage() {
                 <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#eab308' }}></span>
                 <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }}></span>
                 <span style={{ fontFamily: 'monospace', color: 'var(--text-muted)', fontSize: '0.8rem', marginLeft: '12px' }}>
-                  https://{selectedWebsite.subdomain}.kswhospitality.com/{selectedPage?.slug === 'home' ? '' : selectedPage?.slug}
+                  https://{selectedWebsite.customDomain || `${selectedWebsite.subdomain}.kswtechzone.com.np`}/{selectedPage?.slug === 'home' ? '' : selectedPage?.slug}
                 </span>
               </div>
 
@@ -810,7 +822,7 @@ export default function OrgWebsitePage() {
                 {/* Simulated Footer */}
                 <footer style={{ background: '#0f172a', color: 'white', padding: '48px 32px', textAlign: 'center', borderTop: '1px solid #1e293b' }}>
                   <p style={{ margin: '0 0 12px 0', fontWeight: 700 }}>© 2026 {selectedWebsite.title}. All rights reserved.</p>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Powered by KSW Hospitality CMS Studio</p>
+                  <p style={{ margin: 0, fontSize: '0.8rem', color: '#64748b' }}>Powered by KSWMS CMS Studio</p>
                 </footer>
               </div>
             </div>
@@ -1199,7 +1211,7 @@ export default function OrgWebsitePage() {
                     onChange={(e) => setNewSiteData({ ...newSiteData, subdomain: e.target.value.toLowerCase().replace(/[^a-z0-9]/g, '') })} 
                     required 
                   />
-                  <span style={{ color: 'var(--text-muted)' }}>.kswhospitality.com</span>
+                  <span style={{ color: 'var(--text-muted)' }}>.kswtechzone.com.np</span>
                 </div>
               </div>
 
@@ -1323,7 +1335,7 @@ export default function OrgWebsitePage() {
               <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#eab308' }}></span>
               <span style={{ display: 'inline-block', width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }}></span>
               <span style={{ fontFamily: 'monospace', color: 'var(--text-muted)', fontSize: '0.85rem', marginLeft: '12px' }}>
-                https://{selectedWebsite.subdomain}.kswhospitality.com/{selectedPage?.slug === 'home' ? '' : selectedPage?.slug}
+                https://{selectedWebsite.customDomain || `${selectedWebsite.subdomain}.kswtechzone.com.np`}/{selectedPage?.slug === 'home' ? '' : selectedPage?.slug}
               </span>
             </div>
 
@@ -1464,7 +1476,7 @@ export default function OrgWebsitePage() {
               {/* Simulated Footer */}
               <footer style={{ background: '#0f172a', color: '#94a3b8', padding: '48px 32px', textAlign: 'center', borderTop: '1px solid #1e293b' }}>
                 <p style={{ fontSize: '0.9rem', marginBottom: '8px', color: 'white', fontWeight: 600 }}>{selectedWebsite.title}</p>
-                <p style={{ fontSize: '0.8rem', margin: 0 }}>© {new Date().getFullYear()} KSW Hospitality Platform. All rights reserved.</p>
+                <p style={{ fontSize: '0.8rem', margin: 0 }}>© {new Date().getFullYear()} KSWMS Platform. All rights reserved.</p>
               </footer>
             </div>
           </div>
