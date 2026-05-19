@@ -1,0 +1,68 @@
+name: Deploy Next.js Frontend to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build and Deploy to cPanel
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Next.js Production App
+        run: npm run build
+        env:
+          NEXT_PUBLIC_API_URL: https://api.kswtechzone.com.np/api/v1
+          # Add any other build-time env variables here
+
+      # Sync files to cPanel using SFTP
+      # We sync the essential Next.js files (.next, public, package.json, package-lock.json, next.config.js, etc.)
+      - name: Sync Files to cPanel
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.CPANEL_FTP_SERVER }}
+          username: ${{ secrets.CPANEL_FTP_USERNAME }}
+          password: ${{ secrets.CPANEL_FTP_PASSWORD }}
+          port: 21 # Or 22 if utilizing SFTP
+          # Local folder to deploy
+          local-dir: ./
+          # Remote server directory (e.g., /public_html or /nodejs_app)
+          server-dir: ${{ secrets.CPANEL_TARGET_DIR }}
+          # Files to exclude from uploading (e.g., source files that aren't needed in production runtime)
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            src/**
+            tsconfig.json
+            tailwind.config.js
+            postcss.config.js
+
+      # If you are using Phusion Passenger on cPanel, we trigger a reload by touching tmp/restart.txt
+      - name: Restart Phusion Passenger App
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CPANEL_SSH_HOST }}
+          username: ${{ secrets.CPANEL_SSH_USERNAME }}
+          password: ${{ secrets.CPANEL_SSH_PASSWORD }}
+          port: ${{ secrets.CPANEL_SSH_PORT || 22 }}
+          script: |
+            cd ${{ secrets.CPANEL_TARGET_DIR }}
+            npm install --production --omit=dev
+            mkdir -p tmp
+            touch tmp/restart.txt
+            echo "Passenger application successfully reloaded!"
