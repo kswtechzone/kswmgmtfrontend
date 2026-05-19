@@ -7,7 +7,7 @@ on:
 
 jobs:
   deploy:
-    name: Build and Deploy to cPanel
+    name: Build and Deploy Static Site to cPanel
     runs-on: ubuntu-latest
 
     steps:
@@ -23,31 +23,42 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
-      - name: Build Next.js Production App
+      - name: Build and Export Next.js Static Site
         run: npm run build
         env:
           NEXT_PUBLIC_API_URL: https://api.kswtechzone.com.np/api/v1
-          # Add any other build-time env variables here
 
-      # Sync files to cPanel using SFTP
-      # We sync the essential Next.js files (.next, public, package.json, package-lock.json, next.config.js, etc.)
-      - name: Sync Files to cPanel
+      - name: Verify Build Output and Safeguards
+        run: |
+          echo "=== Verifying Build Directory ==="
+          if [ ! -d "./out" ]; then
+            echo "ERROR: './out' directory does not exist! Build failed."
+            exit 1
+          fi
+          
+          echo "=== Verifying index.html ==="
+          if [ ! -f "./out/index.html" ]; then
+            echo "ERROR: './out/index.html' is missing! Static export failed."
+            exit 1
+          fi
+
+          echo "=== Verifying Safeguards ==="
+          if [ -d "./out/.next" ] || [ -d "./out/node_modules" ]; then
+            echo "ERROR: Security leak detected! Production static export directory contains development source folders."
+            exit 1
+          fi
+          
+          echo "=== Directory Structure of Output ==="
+          ls -la ./out
+          
+          echo "Build verification successful!"
+
+      - name: Sync Static out Folder to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: 65.109.25.210
           username: kswms@kswtechzone.com.np
-          password: ${{ secrets.FTP_PASSWORD}}
-          port: 21 # Or 22 if utilizing SFTP
-          # Local folder to deploy
-          local-dir: ./
-          # Remote server directory (e.g., /public_html or /nodejs_app)
-          server-dir: ./
-          # Files to exclude from uploading (e.g., source files that aren't needed in production runtime)
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            src/**
-            tsconfig.json
-            tailwind.config.js
-            postcss.config.js
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          local-dir: ./out/
+          server-dir: public_html/
