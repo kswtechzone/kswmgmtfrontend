@@ -37,7 +37,7 @@ export default function LoginPage() {
       }
     } catch (err: any) {
       if (err.message === 'Failed to fetch') {
-        setError('Connection Failed: Ensure the backend server is running on port 4000');
+        setError(`Connection Failed: Ensure the backend API is active and reachable at ${API_BASE_URL}`);
       } else {
         setError(err.message);
       }
