@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   BedDouble, 
@@ -38,7 +40,7 @@ export default function HMSOverview() {
 
   const fetchHMSStats = async (orgId: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/hotel/recent`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel/recent`, {
         headers: { 
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'x-tenant-id': orgId
@@ -57,7 +59,7 @@ export default function HMSOverview() {
 
   const fetchHotels = async (orgId: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/hotel`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel`, {
         headers: { 
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'x-tenant-id': orgId
@@ -78,7 +80,7 @@ export default function HMSOverview() {
 
   const fetchBrands = async (orgId: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/organizations/${orgId}/brands`, {
+      const res = await fetch(`${API_BASE_URL}/organizations/${orgId}/brands`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
       });
       if (res.ok) {
@@ -92,7 +94,7 @@ export default function HMSOverview() {
 
   const fetchRooms = async (hotelId: string, orgId: string) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/hotel/${hotelId}/rooms`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel/${hotelId}/rooms`, {
         headers: { 
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'x-tenant-id': orgId
@@ -139,7 +141,7 @@ export default function HMSOverview() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/hotel', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -188,7 +190,7 @@ export default function HMSOverview() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/hotel/room', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel/room`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,7 +232,7 @@ export default function HMSOverview() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/hotel/booking', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hotel/booking`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

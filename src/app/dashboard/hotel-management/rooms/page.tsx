@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   BedDouble, 
@@ -22,7 +24,7 @@ export default function RoomsManagement() {
     const fetchRooms = async () => {
       try {
         // First get hotels for this org
-        const hotelRes = await fetch(`http://localhost:4000/api/v1/hotel`, {
+        const hotelRes = await fetch(`${API_BASE_URL}/api/v1/hotel`, {
           headers: { 
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'x-tenant-id': user.organization.id
@@ -32,7 +34,7 @@ export default function RoomsManagement() {
           const hotels = await hotelRes.json();
           if (hotels.length > 0) {
             // Then get rooms for the first hotel
-            const roomRes = await fetch(`http://localhost:4000/api/v1/hotel/${hotels[0].id}/rooms`, {
+            const roomRes = await fetch(`${API_BASE_URL}/api/v1/hotel/${hotels[0].id}/rooms`, {
               headers: { 
                 'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
                 'x-tenant-id': user.organization.id

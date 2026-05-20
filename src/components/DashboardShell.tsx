@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -83,7 +85,7 @@ export default function DashboardShell({ children, mode }: DashboardShellProps) 
     if (!orgId) { setLoaded(true); return; }
     setFetchError(false);
     try {
-      const res = await fetch(`http://localhost:4000/organizations/${orgId}`, {
+      const res = await fetch(`${API_BASE_URL}/organizations/${orgId}`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
       });
       if (res.ok) {

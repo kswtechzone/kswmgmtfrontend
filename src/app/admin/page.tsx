@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   Users, 
@@ -18,7 +20,7 @@ export default function AdminOverview() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('http://localhost:4000/organizations/stats', {
+        const res = await fetch(`${API_BASE_URL}/organizations/stats`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
         });
         if (res.ok) {

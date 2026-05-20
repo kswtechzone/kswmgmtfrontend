@@ -1,4 +1,6 @@
 'use client';
+
+import { API_BASE_URL } from '@/lib/api';
 import React, { useEffect, useState } from 'react';
 import { Wallet, Plus, X, Loader2, TrendingUp, TrendingDown, Receipt, DollarSign, Calendar } from 'lucide-react';
 
@@ -15,13 +17,13 @@ export default function OrgFinancePage() {
   const fetchFinanceData = async (orgId: string) => {
     try {
       const [invRes, expRes] = await Promise.all([
-        fetch(`http://localhost:4000/api/v1/finance/invoices`, {
+        fetch(`${API_BASE_URL}/api/v1/finance/invoices`, {
           headers: { 
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'x-tenant-id': orgId
           }
         }),
-        fetch(`http://localhost:4000/api/v1/finance/expenses`, {
+        fetch(`${API_BASE_URL}/api/v1/finance/expenses`, {
           headers: { 
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'x-tenant-id': orgId
@@ -65,7 +67,7 @@ export default function OrgFinancePage() {
     };
 
     try {
-      const res = await fetch(`http://localhost:4000${endpoint}`, {
+      const res = await fetch(`${API_BASE_URL}${endpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

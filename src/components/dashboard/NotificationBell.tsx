@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef } from 'react';
 import { Bell, Check, Loader2, Sparkles } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/api';
 
 interface NotificationItem {
   id: string;
@@ -40,12 +41,7 @@ export default function NotificationBell() {
   useEffect(() => {
     if (!email) return;
 
-    // Resolve API URL (matches Layout production rewrite interceptor)
-    const baseApi = window.location.hostname === 'localhost' 
-      ? 'http://localhost:4000' 
-      : 'https://api.kswtechzone.com.np';
-
-    const sseUrl = `${baseApi}/notifications/stream?userId=${encodeURIComponent(email)}`;
+    const sseUrl = `${API_BASE_URL}/notifications/stream?userId=${encodeURIComponent(email)}`;
     const eventSource = new EventSource(sseUrl);
 
     eventSource.onmessage = (event) => {
@@ -78,8 +74,7 @@ export default function NotificationBell() {
   const fetchNotifications = async (userEmail: string) => {
     setLoading(true);
     try {
-      const baseApi = window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://api.kswtechzone.com.np';
-      const res = await fetch(`${baseApi}/notifications?userId=${encodeURIComponent(userEmail)}`);
+      const res = await fetch(`${API_BASE_URL}/notifications?userId=${encodeURIComponent(userEmail)}`);
       if (res.ok) {
         const data = await res.json();
         setNotifications(data);
@@ -93,8 +88,7 @@ export default function NotificationBell() {
 
   const markAllAsRead = async () => {
     try {
-      const baseApi = window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://api.kswtechzone.com.np';
-      const res = await fetch(`${baseApi}/notifications/read-all`, {
+      const res = await fetch(`${API_BASE_URL}/notifications/read-all`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId: email }),
@@ -109,8 +103,7 @@ export default function NotificationBell() {
 
   const markAsRead = async (id: string) => {
     try {
-      const baseApi = window.location.hostname === 'localhost' ? 'http://localhost:4000' : 'https://api.kswtechzone.com.np';
-      const res = await fetch(`${baseApi}/notifications/${id}/read`, {
+      const res = await fetch(`${API_BASE_URL}/notifications/${id}/read`, {
         method: 'PATCH',
       });
       if (res.ok) {

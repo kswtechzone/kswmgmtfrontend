@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { Settings, Globe, CircleDollarSign, Building2, Save, Loader2 } from 'lucide-react';
 import { useToast } from '@/components/Toast';
@@ -50,7 +52,7 @@ export default function OrgSettingsPage() {
   const fetchOrgDetails = async (id: string) => {
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/organizations/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/organizations/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -79,7 +81,7 @@ export default function OrgSettingsPage() {
     setSaving(true);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/organizations/${orgId}`, {
+      const res = await fetch(`${API_BASE_URL}/organizations/${orgId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

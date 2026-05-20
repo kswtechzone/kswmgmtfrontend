@@ -1,4 +1,6 @@
 'use client';
+
+import { API_BASE_URL } from '@/lib/api';
 import React, { useEffect, useState } from 'react';
 import { UtensilsCrossed, Plus, X, Loader2, Store, Building2 } from 'lucide-react';
 import { ManageMenuModal, POSModal } from '../../../components/FnbModals';
@@ -16,7 +18,7 @@ export default function OrgPosPage() {
 
   const fetchRestaurants = async () => {
     try {
-      const res = await fetch('http://localhost:4000/api/v1/restaurants', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants`, {
         headers: { 
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'x-tenant-id': JSON.parse(localStorage.getItem('user') || '{}').organization?.id
@@ -53,7 +55,7 @@ export default function OrgPosPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/restaurants', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { API_BASE_URL } from '@/lib/api';
 import { User, Award, Loader2 } from 'lucide-react';
 
 interface LoyaltyItem {
@@ -46,7 +47,7 @@ export default function UserProfileWidget({ user }: UserProfileWidgetProps) {
   const fetchLoyaltyPoints = async (email: string) => {
     setLoadingLoyalty(true);
     try {
-      const res = await fetch(`http://localhost:4000/auth/loyalty?email=${encodeURIComponent(email)}`);
+      const res = await fetch(`${API_BASE_URL}/auth/loyalty?email=${encodeURIComponent(email)}`);
       if (res.ok) {
         const data = await res.json();
         setLoyaltyData(data);

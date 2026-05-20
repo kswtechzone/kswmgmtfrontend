@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   Building2, 
@@ -50,10 +52,10 @@ export default function OrganizationManagement() {
   const fetchData = async () => {
     try {
       const [orgsRes, statsRes] = await Promise.all([
-        fetch('http://localhost:4000/organizations', {
+        fetch(`${API_BASE_URL}/organizations`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
         }),
-        fetch('http://localhost:4000/organizations/stats', {
+        fetch(`${API_BASE_URL}/organizations/stats`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
         })
       ]);
@@ -70,7 +72,7 @@ export default function OrganizationManagement() {
   const toggleModule = async (orgId: string, moduleName: string) => {
     setToggling(moduleName);
     try {
-      const res = await fetch(`http://localhost:4000/organizations/${orgId}/toggle-module`, {
+      const res = await fetch(`${API_BASE_URL}/organizations/${orgId}/toggle-module`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

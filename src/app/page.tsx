@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Hotel, UserPlus, LogIn, Loader2, Sparkles, AlertCircle } from 'lucide-react';
@@ -46,7 +48,7 @@ export default function Home() {
 
   const fetchTenantWebsite = async (sub: string) => {
     try {
-      const apiBase = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api/v1';
+      const apiBase = process.env.NEXT_PUBLIC_API_URL || `${API_BASE_URL}/api/v1`;
       
       // 1. Fetch Dynamic Website layout and configurations
       const res = await fetch(`${apiBase}/public/${sub}/website`);

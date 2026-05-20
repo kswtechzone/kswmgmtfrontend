@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   ShieldCheck, 
@@ -19,7 +21,7 @@ export default function AuditLogs() {
   useEffect(() => {
     const fetchLogs = async () => {
       try {
-        const res = await fetch('http://localhost:4000/organizations/logs', {
+        const res = await fetch(`${API_BASE_URL}/organizations/logs`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
         });
         if (res.ok) {

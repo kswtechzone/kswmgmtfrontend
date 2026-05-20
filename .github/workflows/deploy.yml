@@ -26,7 +26,7 @@ jobs:
       - name: Build and Export Next.js Static Site
         run: npm run build
         env:
-          NEXT_PUBLIC_API_URL: https://api.kswtechzone.com.np/api/v1
+          NEXT_PUBLIC_API_URL: https://api.kswtechzone.com.np
 
       - name: Verify Build Output and Safeguards
         run: |

@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useState, useEffect } from 'react';
 import { 
   Globe, Plus, Edit, Trash2, Eye, Layout, Settings, FileText, Check, 
@@ -64,14 +66,14 @@ export default function OrgWebsitePage() {
     setIsLoading(true);
     try {
       // Fetch Brands
-      const resBrands = await fetch('http://localhost:4000/api/v1/websites/brands', { headers: getHeaders() });
+      const resBrands = await fetch(`${API_BASE_URL}/api/v1/websites/brands`, { headers: getHeaders() });
       if (resBrands.ok) {
         const dataBrands = await resBrands.json();
         setBrands(dataBrands);
       }
 
       // Fetch Websites
-      const resSites = await fetch('http://localhost:4000/api/v1/websites', { headers: getHeaders() });
+      const resSites = await fetch(`${API_BASE_URL}/api/v1/websites`, { headers: getHeaders() });
       if (resSites.ok) {
         const dataSites = await resSites.json();
         setWebsites(dataSites);
@@ -85,7 +87,7 @@ export default function OrgWebsitePage() {
       }
       // Fetch Parlor Services if enabled
       try {
-        const resAdminParlor = await fetch('http://localhost:4000/api/v1/parlor/services', { headers: getHeaders() });
+        const resAdminParlor = await fetch(`${API_BASE_URL}/api/v1/parlor/services`, { headers: getHeaders() });
         if (resAdminParlor.ok) {
           const dataParlor = await resAdminParlor.json();
           setParlorServicesData(dataParlor);
@@ -112,7 +114,7 @@ export default function OrgWebsitePage() {
     }
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/websites', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(newSiteData),
@@ -149,7 +151,7 @@ export default function OrgWebsitePage() {
     };
 
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/${selectedWebsite.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/${selectedWebsite.id}`, {
         method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify(payload),
@@ -175,7 +177,7 @@ export default function OrgWebsitePage() {
     }
 
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/${selectedWebsite.id}/pages`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/${selectedWebsite.id}/pages`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify(newPageData),
@@ -202,7 +204,7 @@ export default function OrgWebsitePage() {
   const handleDeletePage = async (pageId: string) => {
     if (!confirm('Are you sure you want to delete this page?')) return;
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/pages/${pageId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/pages/${pageId}`, {
         method: 'DELETE',
         headers: getHeaders(),
       });
@@ -226,7 +228,7 @@ export default function OrgWebsitePage() {
   const handleAddSection = async (type?: string) => {
     if (!selectedPage) return;
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/pages/${selectedPage.id}/sections`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/pages/${selectedPage.id}/sections`, {
         method: 'POST',
         headers: getHeaders(),
         body: JSON.stringify({ type: type || newSectionType }),
@@ -249,7 +251,7 @@ export default function OrgWebsitePage() {
 
   const handleUpdateSectionContent = async (secId: string, updatedContent: any) => {
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/sections/${secId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/sections/${secId}`, {
         method: 'PUT',
         headers: getHeaders(),
         body: JSON.stringify({ content: updatedContent }),
@@ -273,7 +275,7 @@ export default function OrgWebsitePage() {
   const handleDeleteSection = async (secId: string) => {
     if (!confirm('Remove this section from the page?')) return;
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/websites/sections/${secId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/websites/sections/${secId}`, {
         method: 'DELETE',
         headers: getHeaders(),
       });
@@ -310,7 +312,7 @@ export default function OrgWebsitePage() {
     // Backend save
     try {
       await Promise.all(updatedSections.map((s: any) => 
-        fetch(`http://localhost:4000/api/v1/websites/sections/${s.id}`, {
+        fetch(`${API_BASE_URL}/api/v1/websites/sections/${s.id}`, {
           method: 'PUT',
           headers: getHeaders(),
           body: JSON.stringify({ order: s.order }),
@@ -359,7 +361,7 @@ export default function OrgWebsitePage() {
     
     setSavingServiceId(serviceId);
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/parlor/services/${serviceId}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/parlor/services/${serviceId}`, {
         method: 'PATCH',
         headers: getHeaders(),
         body: JSON.stringify({

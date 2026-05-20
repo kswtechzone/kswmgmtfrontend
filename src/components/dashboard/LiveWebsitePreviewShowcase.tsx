@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 import { Globe, ExternalLink, Edit, Sparkles, Monitor, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { API_BASE_URL } from '@/lib/api';
+
 export default function LiveWebsitePreviewShowcase() {
   const [website, setWebsite] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ export default function LiveWebsitePreviewShowcase() {
       }
 
       try {
-        const res = await fetch('http://localhost:4000/api/v1/websites', {
+        const res = await fetch(`${API_BASE_URL}/api/v1/websites`, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`,

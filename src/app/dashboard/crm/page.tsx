@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import DashboardShell from '@/components/DashboardShell';
 import { 
@@ -56,7 +58,7 @@ export default function CustomerCrmPage() {
   const fetchGuests = async (orgId: string) => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:4000/api/v1/crm/guests', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/crm/guests`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
           'x-tenant-id': orgId
@@ -85,7 +87,7 @@ export default function CustomerCrmPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/crm/guests', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/crm/guests`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -121,7 +123,7 @@ export default function CustomerCrmPage() {
     };
 
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/crm/guests/${selectedGuest.id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/crm/guests/${selectedGuest.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +150,7 @@ export default function CustomerCrmPage() {
   const handleDeleteGuest = async (id: string) => {
     if (!confirm('Are you sure you want to delete this customer profile? This will break references to past standalone bookings.')) return;
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/crm/guests/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/crm/guests/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('access_token')}`,

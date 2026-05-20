@@ -1,4 +1,6 @@
 'use client';
+
+import { API_BASE_URL } from '@/lib/api';
 import React, { useEffect, useState } from 'react';
 import { UtensilsCrossed, Plus, X, Loader2, Store, Building2 } from 'lucide-react';
 import { ManageMenuModal, POSModal } from '../../../components/FnbModals';
@@ -20,7 +22,7 @@ export default function AdminRestaurantPage() {
       const token = localStorage.getItem('access_token');
       
       // Fetch all restaurants globally
-      const resRest = await fetch('http://localhost:4000/api/v1/restaurants/all', {
+      const resRest = await fetch(`${API_BASE_URL}/api/v1/restaurants/all`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (resRest.ok) {
@@ -28,7 +30,7 @@ export default function AdminRestaurantPage() {
       }
 
       // Fetch all orgs for the dropdown
-      const resOrgs = await fetch('http://localhost:4000/organizations', {
+      const resOrgs = await fetch(`${API_BASE_URL}/organizations`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (resOrgs.ok) {
@@ -58,7 +60,7 @@ export default function AdminRestaurantPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/restaurants', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

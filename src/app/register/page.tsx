@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useState } from 'react';
 import { UserPlus, Building2, Mail, Lock, User, Eye, EyeOff, ShieldAlert, BadgeCheck } from 'lucide-react';
 
@@ -37,7 +39,7 @@ export default function RegisterPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/auth/register', {
+      const res = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(requestBody),

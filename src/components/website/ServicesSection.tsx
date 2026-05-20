@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Scissors, Clock, Sparkles, Calendar, User, Mail, Phone, MessageSquare, CheckCircle, X } from 'lucide-react';
+import { API_BASE_URL } from '@/lib/api';
 
 interface ServicesSectionProps {
   content: any;
@@ -89,7 +90,7 @@ export default function ServicesSection({ content, config, previewMode, parlorSe
     
     const slug = tenantSlug || 'kswms'; // Fallback slug
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/public/${slug}/parlor/book`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/public/${slug}/parlor/book`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

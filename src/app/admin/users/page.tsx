@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   MoreVertical, 
@@ -38,7 +40,7 @@ export default function UserManagement() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:4000/users', {
+      const res = await fetch(`${API_BASE_URL}/users`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
       });
       if (res.ok) {
@@ -53,7 +55,7 @@ export default function UserManagement() {
 
   const fetchOrganizations = async () => {
     try {
-      const res = await fetch('http://localhost:4000/organizations', {
+      const res = await fetch(`${API_BASE_URL}/organizations`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
       });
       if (res.ok) {
@@ -73,7 +75,7 @@ export default function UserManagement() {
     
     setCreating(true);
     try {
-      const res = await fetch(`http://localhost:4000/users/organization/${formData.orgId}`, {
+      const res = await fetch(`${API_BASE_URL}/users/organization/${formData.orgId}`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

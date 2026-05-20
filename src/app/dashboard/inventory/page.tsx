@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   Package, 
@@ -40,8 +42,8 @@ export default function UnifiedInventoryPage() {
     try {
       const token = localStorage.getItem('access_token');
       const [invRes, roomsRes] = await Promise.all([
-        fetch('http://localhost:4000/api/v1/inventory', { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
-        fetch('http://localhost:4000/api/v1/hotel/rooms', { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } })
+        fetch(`${API_BASE_URL}/api/v1/inventory`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
+        fetch(`${API_BASE_URL}/api/v1/hotel/rooms`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } })
       ]);
       
       if (invRes.ok) setItems(await invRes.json());
@@ -66,7 +68,7 @@ export default function UnifiedInventoryPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/inventory', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/inventory`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

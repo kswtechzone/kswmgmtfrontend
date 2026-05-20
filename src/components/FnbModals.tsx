@@ -1,3 +1,4 @@
+import { API_BASE_URL } from '@/lib/api';
 import React, { useState, useEffect } from 'react';
 import { X, Plus, Trash, Loader2, ShoppingCart, Check, AlertTriangle, RefreshCw } from 'lucide-react';
 import { useToast } from './Toast';
@@ -19,7 +20,7 @@ export function ManageMenuModal({ restaurant, onClose }: { restaurant: any, onCl
     setLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/menus`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/menus`, {
         headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId }
       });
       if (res.ok) {
@@ -46,7 +47,7 @@ export function ManageMenuModal({ restaurant, onClose }: { restaurant: any, onCl
   const createDefaultMenu = async () => {
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/menus`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/menus`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId },
         body: JSON.stringify({ name: 'Main Menu' })
@@ -66,7 +67,7 @@ export function ManageMenuModal({ restaurant, onClose }: { restaurant: any, onCl
     setLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/menus/${menu.id}/categories`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/menus/${menu.id}/categories`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId },
         body: JSON.stringify({ name: newCategoryName })
@@ -89,7 +90,7 @@ export function ManageMenuModal({ restaurant, onClose }: { restaurant: any, onCl
     setLoading(true);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/categories/${categoryId}/items`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/categories/${categoryId}/items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId },
         body: JSON.stringify({
@@ -200,7 +201,7 @@ export function POSModal({ restaurant, onClose }: { restaurant: any, onClose: ()
     const fetchMenu = async () => {
       try {
         const token = localStorage.getItem('access_token');
-        const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/menus`, {
+        const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/menus`, {
           headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId }
         });
         if (res.ok) {
@@ -232,7 +233,7 @@ export function POSModal({ restaurant, onClose }: { restaurant: any, onClose: ()
     setSubmitting(true);
     try {
       const token = localStorage.getItem('access_token');
-      const res = await fetch(`http://localhost:4000/api/v1/restaurants/${restaurant.id}/orders`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/restaurants/${restaurant.id}/orders`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`, 'x-tenant-id': restaurant.organizationId },
         body: JSON.stringify({

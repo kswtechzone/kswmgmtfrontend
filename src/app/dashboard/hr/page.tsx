@@ -1,4 +1,6 @@
 'use client';
+
+import { API_BASE_URL } from '@/lib/api';
 import React, { useEffect, useState } from 'react';
 import { Briefcase, Plus, X, Loader2, Users, Calendar, Wallet, CheckCircle2, Search } from 'lucide-react';
 
@@ -14,13 +16,13 @@ export default function OrgHrPage() {
   const fetchHRData = async (orgId: string) => {
     try {
       const [staffRes, usersRes] = await Promise.all([
-        fetch(`http://localhost:4000/api/v1/hr`, {
+        fetch(`${API_BASE_URL}/api/v1/hr`, {
           headers: { 
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'x-tenant-id': orgId
           }
         }),
-        fetch(`http://localhost:4000/users/organization/${orgId}`, {
+        fetch(`${API_BASE_URL}/users/organization/${orgId}`, {
           headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
         })
       ]);
@@ -56,7 +58,7 @@ export default function OrgHrPage() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/hr', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/hr`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -13,22 +13,6 @@ export default function RootLayout({
   const [theme, setTheme] = useState<'light' | 'dark'>('dark');
 
   useEffect(() => {
-    // Inject dynamic production API fetch interceptor
-    if (typeof window !== 'undefined') {
-      const originalFetch = window.fetch;
-      window.fetch = function (input: RequestInfo | URL, init?: RequestInit) {
-        if (typeof input === 'string' && input.startsWith('http://localhost:4000')) {
-          const host = window.location.hostname;
-          const isLocal = host.includes('localhost') || host.includes('127.0.0.1');
-          if (!isLocal) {
-            const rewritten = input.replace('http://localhost:4000', 'https://api.kswtechzone.com.np');
-            return originalFetch(rewritten, init);
-          }
-        }
-        return originalFetch(input, init);
-      };
-    }
-
     const savedTheme = localStorage.getItem('theme') as 'light' | 'dark';
     if (savedTheme) {
       setTheme(savedTheme);

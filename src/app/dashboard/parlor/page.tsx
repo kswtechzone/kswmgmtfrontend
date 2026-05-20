@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { 
   Scissors, 
@@ -68,7 +70,7 @@ export default function ParlorOverview() {
     const timer = setTimeout(async () => {
       setIsCrmSearching(true);
       try {
-        const res = await fetch(`http://localhost:4000/api/v1/crm/guests/search?q=${encodeURIComponent(crmSearchQuery)}`, {
+        const res = await fetch(`${API_BASE_URL}/api/v1/crm/guests/search?q=${encodeURIComponent(crmSearchQuery)}`, {
           headers: {
             'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
             'x-tenant-id': user.organization.id
@@ -100,9 +102,9 @@ export default function ParlorOverview() {
     try {
       const token = localStorage.getItem('access_token');
       const [svcRes, catRes, bkgRes] = await Promise.all([
-        fetch(`http://localhost:4000/api/v1/parlor/services`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
-        fetch(`http://localhost:4000/api/v1/parlor/categories`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
-        fetch(`http://localhost:4000/api/v1/parlor/bookings`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } })
+        fetch(`${API_BASE_URL}/api/v1/parlor/services`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
+        fetch(`${API_BASE_URL}/api/v1/parlor/categories`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } }),
+        fetch(`${API_BASE_URL}/api/v1/parlor/bookings`, { headers: { 'Authorization': `Bearer ${token}`, 'x-tenant-id': orgId } })
       ]);
       
       if (svcRes.ok) setServices(await svcRes.json());
@@ -118,7 +120,7 @@ export default function ParlorOverview() {
   const handleUpdateBookingStatus = async (bookingId: string, status: string, paymentStatus?: string, bookingTime?: string) => {
     setUpdatingBookingId(bookingId);
     try {
-      const res = await fetch(`http://localhost:4000/api/v1/parlor/bookings/${bookingId}/status`, {
+      const res = await fetch(`${API_BASE_URL}/api/v1/parlor/bookings/${bookingId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -148,7 +150,7 @@ export default function ParlorOverview() {
     const name = formData.get('name');
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/parlor/categories', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/parlor/categories`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -183,7 +185,7 @@ export default function ParlorOverview() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/parlor/services', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/parlor/services`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -226,7 +228,7 @@ export default function ParlorOverview() {
     };
 
     try {
-      const res = await fetch('http://localhost:4000/api/v1/parlor/bookings', {
+      const res = await fetch(`${API_BASE_URL}/api/v1/parlor/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

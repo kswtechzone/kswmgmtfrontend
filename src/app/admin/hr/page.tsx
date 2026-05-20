@@ -1,5 +1,7 @@
 'use client';
 
+import { API_BASE_URL } from '@/lib/api';
+
 import React, { useEffect, useState } from 'react';
 import { Briefcase, Plus, User, Mail, Calendar, CheckCircle, X } from 'lucide-react';
 
@@ -36,7 +38,7 @@ export default function HrPage() {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:4000/users', {
+      const res = await fetch(`${API_BASE_URL}/users`, {
         headers: { 'Authorization': `Bearer ${localStorage.getItem('access_token')}` }
       });
       if (res.ok) {
@@ -57,7 +59,7 @@ export default function HrPage() {
     setCreating(true);
     try {
       // Simulated creation for now to fulfill frontend interactivity 
-      // Replace with actual API call to http://localhost:4000/api/v1/hr/staff when ready
+      // Replace with actual API call to ${API_BASE_URL}/api/v1/hr/staff when ready
       const newEmployee = {
         id: Math.random().toString(),
         designation: formData.designation,
